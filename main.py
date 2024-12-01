@@ -396,6 +396,122 @@ async def assign(ctx, day: int, mission: int):
     conn.close()
 
 
+@bot.command()
+async def day_assign(ctx, day: int):
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    # Step 1: Fetch all requirements for the specified day
+    query = """
+        SELECT character_name, mission, type, level 
+        FROM requirements 
+        WHERE day = ?
+    """
+    cursor.execute(query, (day,))
+    requirements = cursor.fetchall()
+
+    if not requirements:
+        await ctx.send(f"No requirements found for Day {day}.")
+        conn.close()
+        return
+
+    # Step 2: Fetch the roster of alliance members
+    query = """
+        SELECT name, character_id, power, stars, red_stars, level, guild_id 
+        FROM roster
+    """
+    cursor.execute(query)
+    roster = cursor.fetchall()
+
+    # Prepare to track assignments
+    assignments = {
+        name: {
+            "assignments": [],
+            "total": 0,
+            "missions": {m: 0 for m in range(1, 9)},
+            "assigned_characters": set()  # To track assigned characters for each mission
+        }
+        for name, *_ in roster
+    }
+
+    # Step 3: Process all requirements grouped by mission
+    results_by_mission = {m: [] for m in range(1, 9)}  # To store mission-specific results
+
+    for character_name, req_mission, req_type, required_level in requirements:
+        if req_mission not in results_by_mission:
+            # Skip any unexpected mission numbers
+            continue
+
+        # Filter eligible members who meet the requirements based on Type
+        if req_type == "Y":
+            eligibility_criteria = lambda m: m[3] >= required_level  # m[3] = stars
+        elif req_type == "R":
+            eligibility_criteria = lambda m: m[4] >= required_level  # m[4] = red_stars
+        elif req_type == "G":
+            eligibility_criteria = lambda m: m[5] >= required_level  # m[5] = gear level
+        else:
+            # Unknown type; skip this requirement
+            await ctx.send(f"Unknown requirement type '{req_type}' for {character_name}. Skipping.")
+            continue
+
+        eligible_members = [
+            member for member in roster
+            if (
+                eligibility_criteria(member) and
+                assignments[member[0]]["total"] < 12 and  # Total assignments must be less than 12
+                assignments[member[0]]["missions"][req_mission] < 2  # Max 2 assignments per mission
+            )
+        ]
+
+        # Sort eligible members by power (ascending)
+        eligible_members.sort(key=lambda x: x[2])  # x[2] is the Power
+
+        assigned_count = 0
+        assigned_members = []
+
+        # Assign members to the character for the mission
+        for member in eligible_members:
+            if assigned_count >= 5:  # Only assign up to 5 members per character
+                break
+
+            member_name = member[0]
+
+            # Check if this character for the mission has already been assigned to this member
+            if (character_name, req_mission) not in assignments[member_name]["assigned_characters"]:
+                assignments[member_name]["assignments"].append((character_name, req_mission))
+                assignments[member_name]["total"] += 1
+                assignments[member_name]["missions"][req_mission] += 1
+                assignments[member_name]["assigned_characters"].add((character_name, req_mission))  # Track assignment
+                assigned_members.append(member_name)  # Add member name to list
+                assigned_count += 1
+
+        # Store results for this mission
+        if assigned_count < 5:
+            results_by_mission[req_mission].append(
+                f"⚠️ {character_name}: Incomplete (Assigned {assigned_count}/5) - Members: {', '.join(assigned_members) or 'None'}"
+            )
+        else:
+            results_by_mission[req_mission].append(
+                f"✅ {character_name}: Fully Assigned - Members: {', '.join(assigned_members)}"
+            )
+
+    # Step 4: Send output for all 8 missions
+    for mission in range(1, 9):
+        mission_results = results_by_mission[mission]
+        if not mission_results:
+            description = f"No requirements found for Mission {mission}."
+        else:
+            description = "\n".join(mission_results)
+
+        embed = discord.Embed(
+            title=f"Day {day}, Mission {mission} Assignments",
+            description=description,
+            color=discord.Color.green()
+        )
+        await ctx.send(embed=embed)
+
+    conn.close()
+
 
 
 
