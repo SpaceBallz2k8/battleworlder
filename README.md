@@ -27,7 +27,7 @@ Each member can only have 12 assignments total for a day.
 
 Every member found with the required toon is found then they are sorted by power and the lowest 5 are selected.
 
-To create the required database
+To create the required database (old method)
 
 run the createmydb.py script, this will create the database and the main tables
 
@@ -36,6 +36,10 @@ run the namesmap.py script to insert the data from names_map.csv into the databa
 run the addreq.py script to add the requirements table and insert the data from the req.csv file. Again, if requirements change you should edit this file before importing
 
 Once this is done the main.py should run (once you add your discord key). You will need to !upload_data first, then send your roster.csv obtained from the website to the channel. As long as you have the role set at the start of the script it shold accept the upload.
+
+**NEW METHOD**
+
+I have created an initial_setup.py script that creates the database, tables and inserts the requirements and alias map in 1 process.
 
 
 REQUIREMENTS
