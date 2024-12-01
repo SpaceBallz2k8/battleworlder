@@ -32,7 +32,7 @@ cursor.execute('''
 CREATE TABLE aliases (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     character_id TEXT,
-    alias_name TEXT
+    clean_name TEXT
 );
 ''')
 
