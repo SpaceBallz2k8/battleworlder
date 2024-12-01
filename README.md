@@ -9,7 +9,7 @@ basic discord bot to be used for battleworld assignments (Marvel Strike Force)
 
 !alias searchstring - shows clean names and names used in the roster csv
 
-!assign day_number mission_number - eg !assign 1 1 will try to assign members to spec ops 1 in on day 1
+!assign day_number mission_number - eg !assign 1 1 will try to assign members to spec ops 1 on day 1
 
 !get_data toon r/g/y x - Find alliance members with searched item eg !get_data spiderman r7 will look for all spiderman's in your alliance with 7 red stars or greater
 
