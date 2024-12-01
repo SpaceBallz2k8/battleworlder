@@ -11,7 +11,9 @@ basic discord bot to be used for battleworld assignments (Marvel Strike Force)
 
 !assign day_number mission_number - eg !assign 1 1 will try to assign members to spec ops 1 on day 1
 
-!assign_day x (1-5) - Assigns the entire days spec ops
+!day_assign x (1-5) - Assigns the entire days spec ops and prints it per mission (8 channel embeds)
+
+!user_assign x (1-5) - Assigns the entire days spec ps and prints it per user (24 channel embeds)
 
 !get_data toon r/g/y x - Find alliance members with searched item eg !get_data spiderman r7 will look for all spiderman's in your alliance with 7 red stars or greater
 
