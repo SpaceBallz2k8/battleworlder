@@ -35,6 +35,7 @@ Once this is done the main.py should run (once you add your discord key). You wi
 
 
 REQUIREMENTS
+
 sqlite3
 
 pandas
