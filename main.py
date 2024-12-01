@@ -426,7 +426,7 @@ async def day_assign(ctx, day: int):
     # Prepare to track assignments
     assignments = {
         name: {
-            "assignments": {m: 0 for m in range(1, 9)},  # Max 2 assignments per mission
+            "assignments": {m: 0 for m in range(1, 9)},  # Max assignments per mission
             "total": 0,
             "assigned_characters": set()  # To track assigned characters for each mission
         }
@@ -435,6 +435,9 @@ async def day_assign(ctx, day: int):
 
     # Step 3: Process all requirements grouped by mission
     results_by_mission = {m: [] for m in range(1, 9)}  # To store mission-specific results
+
+    # Sort requirements by the number of existing assignments (ascending)
+    mission_assignment_counts = {m: 0 for m in range(1, 9)}
 
     for character_name, req_mission, req_type, required_level in requirements:
         if req_mission not in results_by_mission:
@@ -455,13 +458,12 @@ async def day_assign(ctx, day: int):
             member for member in roster
             if (
                 eligibility_criteria(member) and
-                assignments[member[0]]["total"] < 12 and  # Total assignments must be less than 12
-                assignments[member[0]]["assignments"][req_mission] < 2  # Max 2 assignments per mission
+                assignments[member[0]]["total"] < 12  # Total assignments must be less than 12
             )
         ]
 
-        # Sort eligible members by power (ascending)
-        eligible_members.sort(key=lambda x: x[2])  # x[2] is the Power
+        # Sort eligible members by current assignments (ascending)
+        eligible_members.sort(key=lambda x: assignments[x[0]]["assignments"][req_mission])  # x[0] is member name
 
         assigned_count = 0
         assigned_members = []
@@ -505,6 +507,7 @@ async def day_assign(ctx, day: int):
         await ctx.send(embed=embed)
 
     conn.close()
+
 
 
 @bot.command()
@@ -563,13 +566,12 @@ async def user_assign(ctx, day: int):
             member for member in roster
             if (
                 eligibility_criteria(member) and
-                assignments[member[0]]["total"] < 12 and  # Total assignments must be less than 12
-                len(assignments[member[0]]["assignments"][req_mission]) < 2  # Max 2 assignments per mission
+                assignments[member[0]]["total"] < 12  # Total assignments must be less than 12
             )
         ]
 
-        # Sort eligible members by power (ascending)
-        eligible_members.sort(key=lambda x: x[2])  # x[2] is the Power
+        # Sort eligible members by current assignments (ascending)
+        eligible_members.sort(key=lambda x: assignments[x[0]]["assignments"][req_mission])  # x[0] is member name
 
         assigned_count = 0
 
@@ -608,8 +610,6 @@ async def user_assign(ctx, day: int):
         await ctx.send(embed=embed)
 
     conn.close()
-
-
 
 
 
