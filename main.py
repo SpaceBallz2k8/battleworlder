@@ -486,13 +486,14 @@ async def day_assign(ctx, day: int):
                 assigned_count += 1
 
         # Store results for this mission
+        character_display = f"{character_name} ({req_type}{required_level})"
         if assigned_count < 5:
             results_by_mission[req_mission].append(
-                f"⚠️ {character_name}: Incomplete (Assigned {assigned_count}/5) - Members: {', '.join(assigned_members) or 'None'}"
+                f"⚠️ {character_display}: Incomplete (Assigned {assigned_count}/5) - Members: {', '.join(assigned_members) or 'None'}"
             )
         else:
             results_by_mission[req_mission].append(
-                f"✅ {character_name}: Fully Assigned - Members: {', '.join(assigned_members)}"
+                f"✅ {character_display}: Fully Assigned - Members: {', '.join(assigned_members)}"
             )
 
     # Step 4: Send output for all 8 missions
@@ -507,6 +508,114 @@ async def day_assign(ctx, day: int):
             title=f"Day {day}, Mission {mission} Assignments",
             description=description,
             color=discord.Color.green()
+        )
+        await ctx.send(embed=embed)
+
+    conn.close()
+
+
+@bot.command()
+async def user_assign(ctx, day: int):
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    # Step 1: Fetch all requirements for the specified day
+    query = """
+        SELECT character_name, mission, type, level 
+        FROM requirements 
+        WHERE day = ?
+    """
+    cursor.execute(query, (day,))
+    requirements = cursor.fetchall()
+
+    if not requirements:
+        await ctx.send(f"No requirements found for Day {day}.")
+        conn.close()
+        return
+
+    # Step 2: Fetch the roster of alliance members
+    query = """
+        SELECT name, character_id, power, stars, red_stars, level, guild_id 
+        FROM roster
+    """
+    cursor.execute(query)
+    roster = cursor.fetchall()
+
+    # Prepare to track assignments
+    assignments = {
+        name: {
+            "assignments": {m: [] for m in range(1, 9)},
+            "total": 0
+        }
+        for name, *_ in roster
+    }
+
+    # Step 3: Process all requirements
+    for character_name, req_mission, req_type, required_level in requirements:
+        if req_mission not in range(1, 9):
+            # Skip any unexpected mission numbers
+            continue
+
+        # Filter eligible members who meet the requirements based on Type
+        if req_type == "Y":
+            eligibility_criteria = lambda m: m[3] >= required_level  # m[3] = stars
+        elif req_type == "R":
+            eligibility_criteria = lambda m: m[4] >= required_level  # m[4] = red_stars
+        elif req_type == "G":
+            eligibility_criteria = lambda m: m[5] >= required_level  # m[5] = gear level
+        else:
+            # Unknown type; skip this requirement
+            await ctx.send(f"Unknown requirement type '{req_type}' for {character_name}. Skipping.")
+            continue
+
+        eligible_members = [
+            member for member in roster
+            if (
+                eligibility_criteria(member) and
+                assignments[member[0]]["total"] < 12  # Total assignments must be less than 12
+            )
+        ]
+
+        # Sort eligible members by power (ascending)
+        eligible_members.sort(key=lambda x: x[2])  # x[2] is the Power
+
+        assigned_count = 0
+
+        # Assign members to the character for the mission
+        for member in eligible_members:
+            if assigned_count >= 5:  # Only assign up to 5 members per character
+                break
+
+            member_name = member[0]
+
+            # Assign to this member
+            if character_name not in assignments[member_name]["assignments"][req_mission]:
+                assignments[member_name]["assignments"][req_mission].append(character_name)
+                assignments[member_name]["total"] += 1
+                assigned_count += 1
+
+    # Step 4: Format and send the output grouped by user
+    for username, user_data in assignments.items():
+        # Format the grid (3 columns x 8 missions)
+        mission_assignments = [
+            f"Mission {m}: {', '.join(chars) or 'None'}"
+            for m, chars in user_data["assignments"].items()
+        ]
+
+        grid = [mission_assignments[i:i + 3] for i in range(0, len(mission_assignments), 3)]  # 3 columns
+
+        # Prepare the message
+        description = "\n".join(
+            " | ".join(row) for row in grid
+        )
+
+        embed = discord.Embed(
+            description=(
+                f"**{username}**\n"
+                f"__Daily Assignments for Day {day}__\n\n"
+                f"{description}"
+            ),
+            color=discord.Color.blue()
         )
         await ctx.send(embed=embed)
 
