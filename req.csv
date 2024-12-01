@@ -1,0 +1,241 @@
+CharacterName,Day,Mission,Type,Level
+Old Man Logan,1,1,Y,3
+Hank Pym,1,1,Y,3
+Sasquatch,1,1,Y,3
+Guardian,1,1,Y,3
+Daken,1,1,Y,3
+Iron Patriot,1,1,Y,3
+Black Bolt,1,2,Y,5
+Black Panther (Shuri),1,2,Y,5
+Northstar,1,2,Y,5
+Pandapool,1,2,Y,5
+The Leader,1,2,Y,5
+Sunfire,1,2,Y,5
+Iron Man,1,3,Y,7
+Deathpool,1,3,Y,7
+Namor,1,3,Y,7
+Mister Fantastic,1,3,Y,7
+Deadpool,1,3,Y,7
+Wolverine,1,3,Y,7
+Spider-Slayer,1,4,G,15
+Moon Knight,1,4,G,15
+Spider-Man (Noir),1,4,G,15
+Venom,1,4,G,15
+Silver Surfer,1,4,G,15
+Cosmic Ghost Rider,1,4,G,15
+Kraven the Hunter,1,5,G,17
+Black Cat,1,5,G,17
+Peter B. Parker,1,5,G,17
+Red Goblin,1,5,G,17
+Ultimus,1,5,G,17
+Super Skrull,1,5,G,17
+Doctor Octopus,1,6,R,6
+Mysterio,1,6,R,6
+Spider-Man (Pavitr),1,6,R,6
+Carnage,1,6,R,6
+Gorr,1,6,R,6
+Nova,1,6,R,6
+Green Goblin (Classic),1,7,G,19
+Spider-Man (Big Time),1,7,G,19
+Peni Parker,1,7,G,19
+Void Knight,1,7,G,19
+Thanos (Endgame),1,7,G,19
+Vahl,1,7,G,19
+Lizard,1,8,R,8
+Vulture,1,8,R,8
+Ghost-Spider,1,8,R,8
+Gwenom,1,8,R,8
+Gladiator,1,8,R,8
+Kang the Conqueror,1,8,R,8
+Captain Britain,2,1,Y,3
+Thanos (Endgame),2,1,Y,3
+Gorr,2,1,Y,3
+Black Panther (Shuri),2,1,Y,3
+Peni Parker,2,1,Y,3
+Peter B. Parker,2,1,Y,3
+Gladiator,2,2,Y,5
+Hank Pym,2,2,Y,5
+Spider-Man (Pavitr),2,2,Y,5
+Starbrand,2,2,Y,5
+Mister Fantastic,2,2,Y,5
+Ultimus,2,2,Y,5
+Black Bolt,2,3,Y,7
+Cosmic Ghost Rider,2,3,Y,7
+Black Knight,2,3,Y,7
+Spider-Man (Noir),2,3,Y,7
+Silver Surfer,2,3,Y,7
+Ghost-Spider,2,3,Y,7
+Doctor Doom,2,4,G,15
+Juggernaut (Zombie),2,4,G,15
+Omega Sentinel,2,4,G,15
+Northstar,2,4,G,15
+Daken,2,4,G,15
+Sunspot,2,4,G,15
+Rogue,2,5,G,17
+Sentinel,2,5,G,17
+Ares,2,5,G,17
+Forge,2,5,G,17
+Sunfire,2,5,G,17
+Deathpool,2,5,G,17
+Iron Man (Zombie),2,6,R,6
+Pandapool,2,6,R,6
+Iron Patriot,2,6,R,6
+Cyclops,2,6,R,6
+Scientist Supreme,2,6,R,6
+Wolverine,2,6,R,6
+Apocalypse,2,7,G,19
+Old Man Logan,2,7,G,19
+Nimrod,2,7,G,19
+Sasquatch,2,7,G,19
+The Leader,2,7,G,19
+Gambit,2,7,G,19
+Guardian,2,8,R,8
+Nightcrawler,2,8,R,8
+Agatha Harkness,2,8,R,8
+Lady Deathstrike,2,8,R,8
+Namor,2,8,R,8
+Deadpool,2,8,R,8
+Omega Sentinel,3,1,Y,3
+Nimrod,3,1,Y,3
+Northstar,3,1,Y,3
+Pandapool,3,1,Y,3
+Gwenom,3,1,Y,3
+Deadpool,3,1,Y,3
+Old Man Logan,3,2,Y,5
+Sentinel,3,2,Y,5
+Sasquatch,3,2,Y,5
+Red Goblin,3,2,Y,5
+Deathpool,3,2,Y,5
+Wolverine,3,2,Y,5
+Guardian,3,3,Y,7
+Daken,3,3,Y,7
+Void Knight,3,3,Y,7
+Sunfire,3,3,Y,7
+Lady Deathstrike,3,3,Y,7
+Scientist Supreme,3,3,Y,7
+Black Cat,3,4,G,15
+Iron Man,3,4,G,15
+Peter B. Parker,3,4,G,15
+Starbrand,3,4,G,15
+Quicksilver,3,4,G,15
+Ultimus,3,4,G,15
+Green Goblin (Classic),3,5,G,17
+Captain Britain,3,5,G,17
+Gorr,3,5,G,17
+Spider-Man (Pavitr),3,5,G,17
+Spider-Man (Big Time),3,5,G,17
+Captain Carter,3,5,G,17
+Super Skrull,3,6,R,6
+Black Bolt,3,6,R,6
+Ares,3,6,R,6
+Cosmic Ghost Rider,3,6,R,6
+Sunspot,3,6,R,6
+Silver Surfer,3,6,R,6
+Mephisto,3,7,G,19
+Nova,3,7,G,19
+Gladiator,3,7,G,19
+Black Panther (Shuri),3,7,G,19
+Black Knight,3,7,G,19
+Nightcrawler,3,7,G,19
+Apocalypse,3,8,R,8
+Thanos (Endgame),3,8,R,8
+Hank Pym,3,8,R,8
+Peni Parker,3,8,R,8
+Forge,3,8,R,8
+Captain America,3,8,R,8
+Man-Thing,4,1,Y,3
+Oath,4,1,Y,3
+Blade,4,1,Y,3
+Sentinel,4,1,Y,3
+Agatha Harkness,4,1,Y,3
+Ultimus,4,1,Y,3
+Doctor Doom,4,2,Y,5
+Captain Britain,4,2,Y,5
+Omega Sentinel,4,2,Y,5
+Nimrod,4,2,Y,5
+Thanos (Endgame),4,2,Y,5
+Guardian,4,2,Y,5
+Dormammu,4,3,Y,7
+Hank Pym,4,3,Y,7
+Black Panther (Shuri),4,3,Y,7
+Northstar,4,3,Y,7
+Peni Parker,4,3,Y,7
+Moon Knight,4,3,Y,7
+Archangel,4,4,G,15
+Phoenix,4,4,G,15
+Scarlet Witch (Zombie),4,4,G,15
+Spider-Man (Pavitr),4,4,G,15
+Spider-Weaver,4,4,G,15
+Cyclops,4,4,G,15
+Rogue,4,5,G,17
+Morgan Le Fay,4,5,G,17
+Juggernaut (Zombie),4,5,G,17
+Gladiator,4,5,G,17
+Sunspot,4,5,G,17
+X-23,4,5,G,17
+Odin,4,6,R,6
+Old Man Logan,4,6,R,6
+Red Hulk,4,6,R,6
+Peter B. Parker,4,6,R,6
+Red Goblin,4,6,R,6
+Nightcrawler,4,6,R,6
+Super Skrull,4,7,G,19
+Gorr,4,7,G,19
+Gwenom,4,7,G,19
+Forge,4,7,G,19
+Deathpool,4,7,G,19
+Wolverine,4,7,G,19
+Iron Man (Zombie),4,8,R,8
+Sasquatch,4,8,R,8
+Void Knight,4,8,R,8
+Vahl,4,8,R,8
+Sunfire,4,8,R,8
+Gambit,4,8,R,8
+Scarlet Witch (Zombie),5,1,Y,3
+Gladiator,5,1,Y,3
+Guardian,5,1,Y,3
+Sunfire,5,1,Y,3
+Silver Surfer,5,1,Y,3
+Wolverine,5,1,Y,3
+Iron Man (Zombie),5,2,Y,5
+Gorr,5,2,Y,5
+Ares,5,2,Y,5
+Northstar,5,2,Y,5
+Daken,5,2,Y,5
+Deadpool,5,2,Y,5
+Old Man Logan,5,3,Y,7
+Juggernaut (Zombie),5,3,Y,7
+Thanos (Endgame),5,3,Y,7
+Sasquatch,5,3,Y,7
+Pandapool,5,3,Y,7
+Ultimus,5,3,Y,7
+Man-Thing,5,4,G,15
+Peni Parker,5,4,G,15
+Void Knight,5,4,G,15
+Ghost Rider (Robbie),5,4,G,15
+Lady Deathstrike,5,4,G,15
+Mysterio,5,4,G,15
+Apocalypse,5,5,G,17
+Oath,5,5,G,17
+Gwenom,5,5,G,17
+Spider-Slayer,5,5,G,17
+Quicksilver,5,5,G,17
+Scientist Supreme,5,5,G,17
+Green Goblin (Classic),5,6,R,6
+Captain Britain,5,6,R,6
+Sentinel,5,6,R,6
+Hank Pym,5,6,R,6
+Black Panther (Shuri),5,6,R,6
+Venom,5,6,R,6
+Blade,5,7,G,19
+Omega Sentinel,5,7,G,19
+Peter B. Parker,5,7,G,19
+Cosmic Ghost Rider,5,7,G,19
+Red Goblin,5,7,G,19
+Vulture,5,7,G,19
+Doctor Octopus,5,8,R,8
+Nimrod,5,8,R,8
+Spider-Man (Pavitr),5,8,R,8
+Deathpool,5,8,R,8
+Moon Knight,5,8,R,8
+Carnage,5,8,R,8
