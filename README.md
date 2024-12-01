@@ -1,4 +1,4 @@
-# battleworlder
+# battleworlder discord bot
 Discord bot for battleworld assignments
 
 basic discord bot to be used for battleworld assignments (Marvel Strike Force)
