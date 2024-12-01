@@ -9,7 +9,7 @@ basic discord bot to be used for battleworld assignments (Marvel Strike Force)
 
 !alias searchstring - shows clean names and names used in the roster csv
 
-!assign day_number mission_number - eg !assign 1 1 will try to assign members to spec ops 1 on day 1
+** dont use this. logic is wrong !assign day_number mission_number - eg !assign 1 1 will try to assign members to spec ops 1 on day 1
 
 !day_assign x (1-5) - Assigns the entire days spec ops and prints it per mission (8 channel embeds)
 
