@@ -6,9 +6,9 @@ import os
 import pandas as pd
 
 # Bot Configuration
-TOKEN = "your discord key here"  # Replace with your bot's token
-ALLOWED_ROLE = "The Chosen Ones"  # Role allowed to upload CSV files - Create a discord role on your server and give it to the users you want to allow bot usage
-db_path = "roster.db"  # You need to create this to start with
+TOKEN = "key here"  # Replace with your bot's token
+ALLOWED_ROLE = "The Chosen Ones"  # Role allowed to upload CSV files
+db_path = "roster.db"
 data = None
 
 # Define bot intents
@@ -298,7 +298,7 @@ async def assign(ctx, day: int, mission: int):
 
     # Step 2: Fetch the roster of alliance members
     query = """
-        SELECT name, character_id, power, stars, level, guild_id 
+        SELECT name, character_id, power, stars, red_stars, level, guild_id 
         FROM roster
     """
     cursor.execute(query)
@@ -318,12 +318,23 @@ async def assign(ctx, day: int, mission: int):
     # Step 3: Process each requirement for the day and mission
     failed_mission = False  # Track if the mission fails due to any character being unassigned
 
-    for character_name, req_mission, char_type, required_level in requirements:
-        # Filter eligible members who meet the requirements
+    for character_name, req_mission, req_type, required_level in requirements:
+        # Filter eligible members who meet the requirements based on Type
+        if req_type == "Y":
+            eligibility_criteria = lambda m: m[3] >= required_level  # m[3] = stars
+        elif req_type == "R":
+            eligibility_criteria = lambda m: m[4] >= required_level  # m[4] = red_stars
+        elif req_type == "G":
+            eligibility_criteria = lambda m: m[5] >= required_level  # m[5] = gear level
+        else:
+            # Unknown type; skip this requirement
+            await ctx.send(f"Unknown requirement type '{req_type}' for {character_name}. Skipping.")
+            continue
+
         eligible_members = [
             member for member in roster
             if (
-                member[4] >= required_level and  # member's level must meet or exceed the requirement
+                eligibility_criteria(member) and
                 assignments[member[0]]["total"] < 12 and  # Total assignments must be less than 12
                 assignments[member[0]]["missions"][req_mission] < 2  # Max 2 assignments per mission
             )
@@ -383,6 +394,8 @@ async def assign(ctx, day: int, mission: int):
         await ctx.send(embed=embed)
 
     conn.close()
+
+
 
 
 
