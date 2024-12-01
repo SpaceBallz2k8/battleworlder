@@ -1,4 +1,4 @@
-# battleworlder discord bot
+# BattleWorlder discord bot
 Discord bot for battleworld assignments
 
 basic discord bot to be used for battleworld assignments (Marvel Strike Force)
@@ -23,3 +23,9 @@ run the namesmap.py script to insert the data from names_map.csv into the databa
 run the addreq.py script to add the requirements table and insert the data from the req.csv file. Again, if requirements change you should edit this file before importing
 
 Once this is done the main.py should run (once you add your discord key). You will need to !upload_data first, then send your roster.csv obtained from the website to the channel. As long as you have the role set at the start of the script it shold accept the upload.
+
+
+REQUIREMENTS
+sqlite3
+pandas
+discord.py
