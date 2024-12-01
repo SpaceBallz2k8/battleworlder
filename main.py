@@ -426,9 +426,8 @@ async def day_assign(ctx, day: int):
     # Prepare to track assignments
     assignments = {
         name: {
-            "assignments": [],
+            "assignments": {m: 0 for m in range(1, 9)},  # Max 2 assignments per mission
             "total": 0,
-            "missions": {m: 0 for m in range(1, 9)},
             "assigned_characters": set()  # To track assigned characters for each mission
         }
         for name, *_ in roster
@@ -439,18 +438,16 @@ async def day_assign(ctx, day: int):
 
     for character_name, req_mission, req_type, required_level in requirements:
         if req_mission not in results_by_mission:
-            # Skip any unexpected mission numbers
             continue
 
-        # Filter eligible members who meet the requirements based on Type
-        if req_type == "Y":
-            eligibility_criteria = lambda m: m[3] >= required_level  # m[3] = stars
-        elif req_type == "R":
-            eligibility_criteria = lambda m: m[4] >= required_level  # m[4] = red_stars
-        elif req_type == "G":
-            eligibility_criteria = lambda m: m[5] >= required_level  # m[5] = gear level
-        else:
-            # Unknown type; skip this requirement
+        # Determine eligibility criteria based on type
+        eligibility_criteria = {
+            "Y": lambda m: m[3] >= required_level,  # stars
+            "R": lambda m: m[4] >= required_level,  # red_stars
+            "G": lambda m: m[5] >= required_level,  # gear level
+        }.get(req_type)
+
+        if eligibility_criteria is None:
             await ctx.send(f"Unknown requirement type '{req_type}' for {character_name}. Skipping.")
             continue
 
@@ -459,7 +456,7 @@ async def day_assign(ctx, day: int):
             if (
                 eligibility_criteria(member) and
                 assignments[member[0]]["total"] < 12 and  # Total assignments must be less than 12
-                assignments[member[0]]["missions"][req_mission] < 2  # Max 2 assignments per mission
+                assignments[member[0]]["assignments"][req_mission] < 2  # Max 2 assignments per mission
             )
         ]
 
@@ -478,9 +475,8 @@ async def day_assign(ctx, day: int):
 
             # Check if this character for the mission has already been assigned to this member
             if (character_name, req_mission) not in assignments[member_name]["assigned_characters"]:
-                assignments[member_name]["assignments"].append((character_name, req_mission))
+                assignments[member_name]["assignments"][req_mission] += 1
                 assignments[member_name]["total"] += 1
-                assignments[member_name]["missions"][req_mission] += 1
                 assignments[member_name]["assigned_characters"].add((character_name, req_mission))  # Track assignment
                 assigned_members.append(member_name)  # Add member name to list
                 assigned_count += 1
@@ -499,10 +495,7 @@ async def day_assign(ctx, day: int):
     # Step 4: Send output for all 8 missions
     for mission in range(1, 9):
         mission_results = results_by_mission[mission]
-        if not mission_results:
-            description = f"No requirements found for Mission {mission}."
-        else:
-            description = "\n".join(mission_results)
+        description = "\n".join(mission_results) if mission_results else f"No requirements found for Mission {mission}."
 
         embed = discord.Embed(
             title=f"Day {day}, Mission {mission} Assignments",
@@ -544,7 +537,7 @@ async def user_assign(ctx, day: int):
     # Prepare to track assignments
     assignments = {
         name: {
-            "assignments": {m: [] for m in range(1, 9)},
+            "assignments": {m: [] for m in range(1, 9)},  # Initialize assignments for each mission
             "total": 0
         }
         for name, *_ in roster
@@ -553,18 +546,16 @@ async def user_assign(ctx, day: int):
     # Step 3: Process all requirements
     for character_name, req_mission, req_type, required_level in requirements:
         if req_mission not in range(1, 9):
-            # Skip any unexpected mission numbers
             continue
 
         # Filter eligible members who meet the requirements based on Type
-        if req_type == "Y":
-            eligibility_criteria = lambda m: m[3] >= required_level  # m[3] = stars
-        elif req_type == "R":
-            eligibility_criteria = lambda m: m[4] >= required_level  # m[4] = red_stars
-        elif req_type == "G":
-            eligibility_criteria = lambda m: m[5] >= required_level  # m[5] = gear level
-        else:
-            # Unknown type; skip this requirement
+        eligibility_criteria = {
+            "Y": lambda m: m[3] >= required_level,  # stars
+            "R": lambda m: m[4] >= required_level,  # red_stars
+            "G": lambda m: m[5] >= required_level,  # gear level
+        }.get(req_type)
+
+        if eligibility_criteria is None:
             await ctx.send(f"Unknown requirement type '{req_type}' for {character_name}. Skipping.")
             continue
 
@@ -572,7 +563,8 @@ async def user_assign(ctx, day: int):
             member for member in roster
             if (
                 eligibility_criteria(member) and
-                assignments[member[0]]["total"] < 12  # Total assignments must be less than 12
+                assignments[member[0]]["total"] < 12 and  # Total assignments must be less than 12
+                len(assignments[member[0]]["assignments"][req_mission]) < 2  # Max 2 assignments per mission
             )
         ]
 
@@ -598,7 +590,7 @@ async def user_assign(ctx, day: int):
     for username, user_data in assignments.items():
         # Format the grid (3 columns x 8 missions)
         mission_assignments = [
-            f"Mission {m}: {', '.join(chars) or 'None'}"
+            f"Mission {m}: {', '.join(chars) if chars else 'None'}"
             for m, chars in user_data["assignments"].items()
         ]
 
@@ -610,16 +602,14 @@ async def user_assign(ctx, day: int):
         )
 
         embed = discord.Embed(
-            description=(
-                f"**{username}**\n"
-                f"__Daily Assignments for Day {day}__\n\n"
-                f"{description}"
-            ),
+            description=(f"**{username}**\n__Daily Assignments for Day {day}__\n\n{description}"),
             color=discord.Color.blue()
         )
         await ctx.send(embed=embed)
 
     conn.close()
+
+
 
 
 
