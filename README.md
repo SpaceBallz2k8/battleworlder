@@ -56,3 +56,5 @@ Starts assigning members to characters with the rarest first. Then if more are a
 
 
 This might need tweaking, i have tried adding some balancing but if you have members with much higher powered rosters than others you will find they have less to assign. Essentially leaving the highest tcp to attack with.
+
+[Buy me a coffee](https://www.paypal.com/donate/?hosted_button_id=RZJL4VPHFWG7L)
