@@ -36,11 +36,18 @@ y6 = 6 Yellow Star or greater
 The bot follows this pattern
 
 Loads the requirements for the day
+
 Loads the roster data
+
 Searches for every character required for that day (48)
+
 Stores the results in a dictionary for each member, along with assignment counts, dupe checks etc.
+
 Sorts the found results into power order in the dictionary
+
 Counts the results in each "search"
+
 Starts assigning members to characters with the rarest first. Then if more are available it looks at power and tries to assign the lowest.
+
 
 This might need tweaking, i have tried adding some balancing but if you have members with much higher powered rosters than others you will find they have less to assign. Essentially leaving the highest tcp to attack with.
