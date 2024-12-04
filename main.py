@@ -20,7 +20,7 @@ intents.message_content = True
 
 bot = commands.Bot(command_prefix="!", intents=intents)
 
-# Load data from the database for a specific guild
+# Load data from the database for a specific guild - multi guild bot - couldnt figure it out
 def load_data(guild_id):
     global data
     conn = sqlite3.connect(db_path)
@@ -34,7 +34,7 @@ def load_data(guild_id):
     conn.close()
 
 
-# Load aliases into a dictionary for faster lookups
+# Load aliases into a dictionary for faster lookups - old function
 def load_aliases():
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
