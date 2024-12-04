@@ -20,7 +20,7 @@ sqlite3
 
 # Usage
 
-The bot has only a few commands. there are a few options in the commands search commands.
+The bot has only a few commands. there are a few options in the search system.
 The bot looks at requirements like r/y/g (red star, yellow star, gear) then the level required.
 eg. r7 = red star 7 or greater (diamonds are classed as r8,r9,r10)
 g16 = Gear 16 or greater
