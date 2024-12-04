@@ -11,6 +11,8 @@ sqlite3
 
 # Setup
 
+YOU NEED TO CREATE YOUR OWN BOT AND OBTAIN A TOKEN ON THE DISCORD DEVELOPERS PANEL BEFORE USING THIS !!!
+
 1. Clone the repository
 2. run initialsetup.py - This will create your database and add the name aliases and the requirements for battleworld. You can edit these files as new characters and different requirements become available.
 3. edit the main.py and add your discord token and your role name (allows the bot to operate with certain users)
