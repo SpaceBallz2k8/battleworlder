@@ -1,51 +1,46 @@
-# BattleWorlder discord bot
-Discord bot for battleworld assignments
+# Battleworlder
 
-basic discord bot to be used for battleworld assignments (Marvel Strike Force)
+A basic discord bot used to auto assign alliance members to spec ops missions
 
-!upload_data - triggers the bot to ask for a roster csv file
+# Requirements
 
-!restore_data - restore data from backup
-
-!alias searchstring - shows clean names and names used in the roster csv
-
-** dont use this. logic is wrong !assign day_number mission_number - eg !assign 1 1 will try to assign members to spec ops 1 on day 1
-
-!day_assign x (1-5) - Assigns the entire days spec ops and prints it per mission (8 channel embeds)
-
-!user_assign x (1-5) - Assigns the entire days spec ps and prints it per user (24 channel embeds)
-
-!get_data toon r/g/y x - Find alliance members with searched item eg !get_data spiderman r7 will look for all spiderman's in your alliance with 7 red stars or greater
-
-This is in a very early beta stage
-
-I am trying to make the bot adhere to these rules
-
-Only assign a max of 2 toons per alliance member in a single spec ops mission.
-
-Each member can only have 12 assignments total for a day.
-
-Every member found with the required toon is found then they are sorted by power and the lowest 5 are selected.
-
-To create the required database (old method)
-
-run the createmydb.py script, this will create the database and the main tables
-
-run the namesmap.py script to insert the data from names_map.csv into the database table. You can add new toons to the csv if any were added. This contains the clean character names
-
-run the addreq.py script to add the requirements table and insert the data from the req.csv file. Again, if requirements change you should edit this file before importing
-
-Once this is done the main.py should run (once you add your discord key). You will need to !upload_data first, then send your roster.csv obtained from the website to the channel. As long as you have the role set at the start of the script it shold accept the upload.
-
-**NEW METHOD**
-
-I have created an initial_setup.py script that creates the database, tables and inserts the requirements and alias map in 1 process.
-
-
-REQUIREMENTS
-
+python 3.12+
+discord.py
+pandas
 sqlite3
 
-pandas
+# Setup
 
-discord.py
+1. Clone the repository
+2. run initialsetup.py - This will create your database and add the name aliases and the requirements for battleworld. You can edit these files as new characters and different requirements become available.
+3. edit the main.py and add your discord token and your role name (allows the bot to operate with certain users)
+4. Start the bot and wait for it to come online.
+5. Run the !upload_data command. The bot will ask for the csv. Send your roster.csv to the channel your bot is in. If your role matches the bot will insert the roster data into the database.
+6. Enjoy
+
+# Usage
+
+The bot has only a few commands. there are a few options in the commands search commands.
+The bot looks at requirements like r/y/g (red star, yellow star, gear) then the level required.
+eg. r7 = red star 7 or greater (diamonds are classed as r8,r9,r10)
+g16 = Gear 16 or greater
+y6 = 6 Yellow Star or greater
+
+!get_data spiderman r6 - searches for Spiderman 6 red star or greater in your roster. Sorts them by power (descending)
+!req (x) where x is 1-5 (shows a list of requirements for that day)
+!alias thanos (shows the aliases for names used in the roster file. Uses a wildcard search and shows all containing)
+!upload_data - prompts the bot to ask for a replacement csv - use this when your roster changes
+
+!assign (x) where x is 1-5 - Assign members to spec ops characters and display the results
+
+The bot follows this pattern
+
+Loads the requirements for the day
+Loads the roster data
+Searches for every character required for that day (48)
+Stores the results in a dictionary for each member, along with assignment counts, dupe checks etc.
+Sorts the found results into power order in the dictionary
+Counts the results in each "search"
+Starts assigning members to characters with the rarest first. Then if more are available it looks at power and tries to assign the lowest.
+
+This might need tweaking, i have tried adding some balancing but if you have members with much higher powered rosters than others you will find they have less to assign. Essentially leaving the highest tcp to attack with.
