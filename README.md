@@ -29,8 +29,11 @@ g16 = Gear 16 or greater
 y6 = 6 Yellow Star or greater
 
 !get_data spiderman r6 - searches for Spiderman 6 red star or greater in your roster. Sorts them by power (descending)
+
 !req (x) where x is 1-5 (shows a list of requirements for that day)
+
 !alias thanos (shows the aliases for names used in the roster file. Uses a wildcard search and shows all containing)
+
 !upload_data - prompts the bot to ask for a replacement csv - use this when your roster changes
 
 !assign (x) where x is 1-5 - Assign members to spec ops characters and display the results
